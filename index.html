@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlockCraft Adventure - Web Edition</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="game-canvas"></canvas>
+        
+        <!-- Main Menu -->
+        <div id="main-menu" class="menu active">
+            <div class="menu-header">
+                <h1>BlockCraft Adventure</h1>
+                <p>Web Edition</p>
+            </div>
+            <div class="menu-buttons">
+                <button id="play-button" class="menu-button">Play</button>
+                <button id="settings-button" class="menu-button">Settings</button>
+                <button id="credits-button" class="menu-button">Credits</button>
+                <button id="quit-button" class="menu-button">Quit</button>
+            </div>
+            <div class="menu-footer">
+                <p>Version 1.0.0</p>
+            </div>
+        </div>
+        
+        <!-- Settings Menu -->
+        <div id="settings-menu" class="menu">
+            <div class="menu-header">
+                <h1>Settings</h1>
+            </div>
+            <div class="settings-content">
+                <div class="settings-tabs">
+                    <button class="tab-button active" data-tab="graphics">Graphics</button>
+                    <button class="tab-button" data-tab="controls">Controls</button>
+                    <button class="tab-button" data-tab="audio">Audio</button>
+                    <button class="tab-button" data-tab="accessibility">Accessibility</button>
+                </div>
+                
+                <!-- Graphics Settings -->
+                <div id="graphics-tab" class="settings-tab active">
+                    <div class="setting-item">
+                        <label for="graphics-quality">Graphics Quality</label>
+                        <select id="graphics-quality" class="setting-select">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                            <option value="ultra">Ultra</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="render-distance">Render Distance</label>
+                        <input type="range" id="render-distance" class="setting-slider" min="2" max="16" value="8">
+                        <span id="render-distance-value">8</span>
+                    </div>
+                    <div class="setting-item">
+                        <label for="shadows">Shadows</label>
+                        <input type="checkbox" id="shadows" class="setting-checkbox" checked>
+                    </div>
+                    <div class="setting-item">
+                        <label for="particles">Particles</label>
+                        <input type="checkbox" id="particles" class="setting-checkbox" checked>
+                    </div>
+                    <div class="setting-item">
+                        <label for="fps-limit">FPS Limit</label>
+                        <select id="fps-limit" class="setting-select">
+                            <option value="30">30 FPS</option>
+                            <option value="60" selected>60 FPS</option>
+                            <option value="120">120 FPS</option>
+                            <option value="unlimited">Unlimited</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="vsync">VSync</label>
+                        <input type="checkbox" id="vsync" class="setting-checkbox" checked>
+                    </div>
+                </div>
+                
+                <!-- Controls Settings -->
+                <div id="controls-tab" class="settings-tab">
+                    <div class="setting-item">
+                        <label for="control-scheme">Control Scheme</label>
+                        <select id="control-scheme" class="setting-select">
+                            <option value="keyboard" selected>Keyboard & Mouse</option>
+                            <option value="touch">Touch</option>
+                            <option value="gamepad">Gamepad</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="mouse-sensitivity">Mouse Sensitivity</label>
+                        <input type="range" id="mouse-sensitivity" class="setting-slider" min="0.1" max="2" step="0.1" value="1">
+                        <span id="mouse-sensitivity-value">1.0</span>
+                    </div>
+                    <div class="setting-item">
+                        <label for="invert-y">Invert Y-Axis</label>
+                        <input type="checkbox" id="invert-y" class="setting-checkbox">
+                    </div>
+                    <div class="setting-item">
+                        <label for="autowalk">Auto-Walk</label>
+                        <input type="checkbox" id="autowalk" class="setting-checkbox">
+                    </div>
+                    <div class="setting-item">
+                        <h3>Key Bindings</h3>
+                        <div class="key-bindings">
+                            <div class="key-binding">
+                                <span>Move Forward</span>
+                                <button class="key-button" data-action="forward">W</button>
+                            </div>
+                            <div class="key-binding">
+                                <span>Move Backward</span>
+                                <button class="key-button" data-action="backward">S</button>
+                            </div>
+                            <div class="key-binding">
+                                <span>Move Left</span>
+                                <button class="key-button" data-action="left">A</button>
+                            </div>
+                            <div class="key-binding">
+                                <span>Move Right</span>
+                                <button class="key-button" data-action="right">D</button>
+                            </div>
+                            <div class="key-binding">
+                                <span>Jump</span>
+                                <button class="key-button" data-action="jump">Space</button>
+                            </div>
+                            <div class="key-binding">
+                                <span>Sneak</span>
+                                <button class="key-button" data-action="sneak">Shift</button>
+                            </div>
+                            <div class="key-binding">
+                                <span>Place Block</span>
+                                <button class="key-button" data-action="place">Left Click</button>
+                            </div>
+                            <div class="key-binding">
+                                <span>Break Block</span>
+                                <button class="key-button" data-action="break">Right Click</button>
+                            </div>
+                            <div class="key-binding">
+                                <span>Open Inventory</span>
+                                <button class="key-button" data-action="inventory">E</button>
+                            </div>
+                            <div class="key-binding">
+                                <span>Open Crafting</span>
+                                <button class="key-button" data-action="crafting">C</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Audio Settings -->
+                <div id="audio-tab" class="settings-tab">
+                    <div class="setting-item">
+                        <label for="master-volume">Master Volume</label>
+                        <input type="range" id="master-volume" class="setting-slider" min="0" max="100" value="80">
+                        <span id="master-volume-value">80%</span>
+                    </div>
+                    <div class="setting-item">
+                        <label for="music-volume">Music Volume</label>
+                        <input type="range" id="music-volume" class="setting-slider" min="0" max="100" value="70">
+                        <span id="music-volume-value">70%</span>
+                    </div>
+                    <div class="setting-item">
+                        <label for="sfx-volume">Sound Effects Volume</label>
+                        <input type="range" id="sfx-volume" class="setting-slider" min="0" max="100" value="80">
+                        <span id="sfx-volume-value">80%</span>
+                    </div>
+                    <div class="setting-item">
+                        <label for="ambient-volume">Ambient Volume</label>
+                        <input type="range" id="ambient-volume" class="setting-slider" min="0" max="100" value="60">
+                        <span id="ambient-volume-value">60%</span>
+                    </div>
+                </div>
+                
+                <!-- Accessibility Settings -->
+                <div id="accessibility-tab" class="settings-tab">
+                    <div class="setting-item">
+                        <label for="ui-scale">UI Scale</label>
+                        <input type="range" id="ui-scale" class="setting-slider" min="0.5" max="2" step="0.1" value="1">
+                        <span id="ui-scale-value">1.0x</span>
+                    </div>
+                    <div class="setting-item">
+                        <label for="colorblind-mode">Colorblind Mode</label>
+                        <select id="colorblind-mode" class="setting-select">
+                            <option value="none" selected>None</option>
+                            <option value="protanopia">Protanopia</option>
+                            <option value="deuteranopia">Deuteranopia</option>
+                            <option value="tritanopia">Tritanopia</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label for="subtitles">Subtitles</label>
+                        <input type="checkbox" id="subtitles" class="setting-checkbox">
+                    </div>
+                    <div class="setting-item">
+                        <label for="motion-blur">Motion Blur</label>
+                        <input type="checkbox" id="motion-blur" class="setting-checkbox">
+                    </div>
+                    <div class="setting-item">
+                        <label for="camera-shake">Camera Shake</label>
+                        <input type="checkbox" id="camera-shake" class="setting-checkbox" checked>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-buttons">
+                <button id="save-settings-button" class="menu-button">Save Settings</button>
+                <button id="back-button" class="menu-button">Back</button>
+            </div>
+        </div>
+        
+        <!-- Credits Menu -->
+        <div id="credits-menu" class="menu">
+            <div class="menu-header">
+                <h1>Credits</h1>
+            </div>
+            <div class="credits-content">
+                <div class="credits-section">
+                    <h2>Development</h2>
+                    <p>Lead Developer: Your Name</p>
+                    <p>Programming: Your Name</p>
+                    <p>Design: Your Name</p>
+                </div>
+                <div class="credits-section">
+                    <h2>Assets</h2>
+                    <p>Textures: Your Name</p>
+                    <p>Sound Effects: Your Name</p>
+                    <p>Music: Your Name</p>
+                </div>
+                <div class="credits-section">
+                    <h2>Special Thanks</h2>
+                    <p>Testers: Friend Names</p>
+                    <p>Community: Our Players</p>
+                </div>
+            </div>
+            <div class="menu-buttons">
+                <button id="back-from-credits-button" class="menu-button">Back</button>
+            </div>
+        </div>
+        
+        <!-- Pause Menu -->
+        <div id="pause-menu" class="menu">
+            <div class="menu-header">
+                <h1>Game Paused</h1>
+            </div>
+            <div class="menu-buttons">
+                <button id="resume-button" class="menu-button">Resume</button>
+                <button id="save-game-button" class="menu-button">Save Game</button>
+                <button id="load-game-button" class="menu-button">Load Game</button>
+                <button id="settings-in-game-button" class="menu-button">Settings</button>
+                <button id="main-menu-button" class="menu-button">Main Menu</button>
+            </div>
+        </div>
+        
+        <!-- Game UI -->
+        <div id="game-ui" class="hidden">
+            <div id="crosshair"></div>
+            <div id="hotbar">
+                <!-- Hotbar slots will be generated by JavaScript -->
+            </div>
+            <div id="hud">
+                <div id="health-bar">
+                    <div class="bar-fill" id="health-fill"></div>
+                    <span class="bar-text">Health</span>
+                </div>
+                <div id="hunger-bar">
+                    <div class="bar-fill" id="hunger-fill"></div>
+                    <span class="bar-text">Hunger</span>
+                </div>
+                <div id="thirst-bar">
+                    <div class="bar-fill" id="thirst-fill"></div>
+                    <span class="bar-text">Thirst</span>
+                </div>
+                <div id="xp-bar">
+                    <div class="bar-fill" id="xp-fill"></div>
+                    <span class="bar-text">Level <span id="level-number">1</span></span>
+                </div>
+            </div>
+            <div id="inventory" class="hidden">
+                <!-- Inventory will be generated by JavaScript -->
+            </div>
+            <div id="crafting" class="hidden">
+                <!-- Crafting menu will be generated by JavaScript -->
+            </div>
+            <div id="controls-hint">
+                <p>WASD: Move | Space: Jump | Shift: Sneak | E: Inventory | C: Crafting | ESC: Pause</p>
+            </div>
+        </div>
+        
+        <!-- Mobile Controls (hidden by default) -->
+        <div id="mobile-controls" class="hidden">
+            <div id="joystick-container">
+                <div id="joystick"></div>
+            </div>
+            <div id="action-buttons">
+                <button id="mobile-jump" class="mobile-button">Jump</button>
+                <button id="mobile-sneak" class="mobile-button">Sneak</button>
+                <button id="mobile-inventory" class="mobile-button">Inv</button>
+                <button id="mobile-crafting" class="mobile-button">Craft</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/blocks.js"></script>
+    <script src="js/world.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/rendering.js"></script>
+    <script src="js/inventory.js"></script>
+    <script src="js/crafting.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
